@@ -3,8 +3,8 @@
 maxTime=1800
 # slice=5
 
-./pandaPIparser -R $1 $2 d.hpdl p.hpdl
-./htntranslate -s d.hpdl p.hpdl &> analysis.log
+/planner/parser/pandaPIparser -R $1 $2 d.hpdl p.hpdl
+/planner/translate/htntranslate -s d.hpdl p.hpdl &> analysis.log
 
 minBound=1
 maxBound=10000
@@ -43,8 +43,8 @@ do
   echo
   echo "using bound: $bound"
   echo
-  ./htntranslate -t ordered -i "$bound" d.hpdl p.hpdl -p .ron
-  /home/dh/Dokumente/versioniert/Source-Code/FastDownward/fast-downward.py d.ron p.ron --evaluator 'hff=ff()' --search "iterated([ehc(hff, preferred=[hff]),lazy_greedy([hff], preferred=[hff])], continue_on_fail=true, continue_on_solve=false, max_time=$timeL)"
+  /planner/translate/htntranslate -t ordered -i "$bound" d.hpdl p.hpdl -p .ron
+  /planner/fd/fast-downward.py d.ron p.ron --evaluator 'hff=ff()' --search "iterated([ehc(hff, preferred=[hff]),lazy_greedy([hff], preferred=[hff])], continue_on_fail=true, continue_on_solve=false, max_time=$timeL)"
   status=$?
   if [ "$status" -eq "0" ]
   then
